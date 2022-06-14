@@ -22,13 +22,12 @@ class PdfIngestor(IngestorInterface):
         print(txt_list)
 
         for quote in txt_list:
-            try:
-                
-            if paragraph.text != "":
-                quote_data = paragraph.text.split(' - ')
+            quote_data = quote.split(' - ')
+            if len(quote_data) == 2:
                 quote_data[0] = quote_data[0].strip('"')
                 quotes.append(QuoteModel(quote_data[0], quote_data[1]))
 
+        print(quotes)
         # pdf_string   = pandas.read_csv(file_path, header=0)      
         # for index, quote_data in df.iterrows():
         #     quotes.append(QuoteModel(quote_data['body'], quote_data['author']))
