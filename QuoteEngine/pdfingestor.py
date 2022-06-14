@@ -3,4 +3,5 @@ from quotemodel import QuoteModel
 
 
 class PdfIngestor(IngestorInterface):
-    pass
+    
+    allowed_extensions = ['pdf']
