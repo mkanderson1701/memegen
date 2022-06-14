@@ -1,22 +1,33 @@
-from typing import List
 import docx
 from quoteengine import IngestorInterface
 from quotemodel import QuoteModel
+import re
 
 class DocxIngestor(IngestorInterface):
 
+    allowed_extensions = ['docx']
+
     @classmethod
-    def parse(cls, path: str) -> List[Cat]:
-        if not cls.can_ingest(path):
+    def parse_file(cls, file_path):
+        if not cls.can_ingest(file_path):
             raise Exception('cannot ingest exception')
 
-        cats = []
-        doc = docx.Document(path)
+        quotes = []
+        
+        docx_obj = docx.Document(file_path)
+        for paragraph in docx_obj.paragraphs:
+            if paragraph.text != "":
+                quote_data = paragraph.text.split(' - ')
+                quote_data[0] = quote_data[0].strip('"')
+                quotes.append(QuoteModel(quote_data[0], quote_data[1]))
+        # print(quotes)
+        return quotes
+    
+    def __repr__(self):
+        return f'DocxIngestor(IngestorInterface) : Allowed extensions = {allowed_extensions}'
+    
+    def __str__(self):
+        return f'DocxIngestor(IngestorInterface) : Allowed extensions = {allowed_extensions}'
 
-        for para in doc.paragraphs:
-            if para.text != "":
-                parse = para.text.split(',')
-                new_cat = Cat(parse[0], int(parse[1]), bool(parse[2]))
-                cats.append(new_cat)
-
-        return cats
+if __name__ == '__main__':
+    DocxIngestor.parse_file('./_data/DogQuotes/DogQuotesDOCX.docx')

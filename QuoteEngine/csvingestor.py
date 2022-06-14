@@ -1,22 +1,30 @@
-from typing import List
 import pandas
 from quoteengine import IngestorInterface
 from quotemodel import QuoteModel
 
 
-class CSVImporter(ImportInterface):
+class CsvIngestor(IngestorInterface):
+
     allowed_extensions = ['csv']
 
     @classmethod
-    def parse(cls, path: str) -> List[QuoteModel]:
-        if not cls.can_ingest(path):
+    def parse_file(cls, file_path):
+        if not cls.can_ingest(file_path):
             raise Exception('cannot ingest exception')
 
-        cats = []
-        df = pandas.read_csv(path, header=0)
+        quotes = []
 
-        for index, row in df.iterrows():
-            new_cat = Cat(row['Name'], row['Age'], row['isIndoor'])
-            cats.append(new_cat)
+        df = pandas.read_csv(file_path, header=0)      
+        for index, quote_data in df.iterrows():
+            quotes.append(QuoteModel(quote_data['body'], quote_data['author']))
+        # print(quotes)
+        return quotes
+    
+    def __repr__(self):
+        return f'CsvIngestor(IngestorInterface) : Allowed extensions = {allowed_extensions}'
+    
+    def __str__(self):
+        return f'CsvIngestor(IngestorInterface) : Allowed extensions = {allowed_extensions}'
 
-        return cats
+if __name__ == '__main__':
+    CsvIngestor.parse_file('./_data/DogQuotes/DogQuotesCSV.csv')
