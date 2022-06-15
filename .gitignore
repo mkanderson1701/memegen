@@ -126,5 +126,8 @@ venv.bak/
 .dmypy.json
 dmypy.json
 tests/test_query_wtf.py
+
+#project-specific crap
 testfile.json
 testfile.csv
+images/*.png

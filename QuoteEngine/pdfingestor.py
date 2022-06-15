@@ -1,25 +1,37 @@
+"""Class module for the PDF Ingestor.
+
+It mainly consists of one method, for parsing the supported file type.
+"""
+
 from quoteengine import IngestorInterface
 from quotemodel import QuoteModel
 import subprocess
 
 
 class PdfIngestor(IngestorInterface):
-    
+    """Processor for PDF files.
+
+    Mainly a class method parse_file for processing data file.
+
+    allowed_extensions is overridden here, so that parent class method
+    Importer.get_file() refers to this class for this extension.
+    """
+
     allowed_extensions = ['pdf']
 
     @classmethod
     def parse_file(cls, file_path):
+        """Take a PDF file as input, return a list of quote objects."""
         if not cls.can_ingest(file_path):
             raise Exception('cannot ingest exception')
 
         quotes = []
 
-        p = subprocess.Popen(['pdftotext', '-simple', file_path, '-'], stdout=subprocess.PIPE, text=True)
+        p = subprocess.Popen(['pdftotext.exe', '-simple', file_path, '-'],
+                             stdout=subprocess.PIPE, text=True)
         output, err = p.communicate()
         p_status = p.wait()
         txt_list = output.split('\n')
-
-        print(txt_list)
 
         for quote in txt_list:
             quote_data = quote.split(' - ')
@@ -27,18 +39,20 @@ class PdfIngestor(IngestorInterface):
                 quote_data[0] = quote_data[0].strip('"')
                 quotes.append(QuoteModel(quote_data[0], quote_data[1]))
 
-        print(quotes)
-        # pdf_string   = pandas.read_csv(file_path, header=0)      
-        # for index, quote_data in df.iterrows():
-        #     quotes.append(QuoteModel(quote_data['body'], quote_data['author']))
         # print(quotes)
-        #return quotes
-    
+        return quotes
+
     def __repr__(self):
-        return f'PdfIngestor(IngestorInterface) : Allowed extensions = {allowed_extensions}'
-    
+        """Machine-friendly representation."""
+        return f'PdfIngestor(IngestorInterface) : ' + \
+            'Allowed extensions = {allowed_extensions}'
+
     def __str__(self):
-        return f'PdfIngestor(IngestorInterface) : Allowed extensions = {allowed_extensions}'
+        """User-friendly representation."""
+        return f'PdfIngestor(IngestorInterface) : ' + \
+            'Allowed extensions = {allowed_extensions}'
+
 
 if __name__ == '__main__':
+    """Used during module testing."""
     PdfIngestor.parse_file('./_data/DogQuotes/DogQuotesPDF.pdf')
