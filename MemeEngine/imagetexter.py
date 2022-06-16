@@ -12,6 +12,7 @@ class ImageTexter():
     """This class handles adding text to an image object."""
 
     font_path = './_data/fonts/impact.ttf'
+    quote_size = []
 
     @classmethod
     def text_img(cls, im, text, author):
@@ -33,9 +34,9 @@ class ImageTexter():
         # print(f'Random location: {text_x}, {text_y}')
 
         quote_pos = (text_x, text_y)
-        auth_pos = (text_x + 50, text_y + 75)
+        quote_layer = cls.txt_layer(text, im.size, quote_pos, True)
 
-        quote_layer = cls.txt_layer(text, im.size, quote_pos)
+        auth_pos = (text_x + 50, text_y + 50 + cls.quote_size[0][1] / 2)
         auth_layer = cls.txt_layer(author, im.size, auth_pos, False)
 
         merged = Image.alpha_composite(im, quote_layer)
@@ -47,12 +48,13 @@ class ImageTexter():
         return merged
 
     @classmethod
-    def txt_layer(cls, text, im_size, t_pos, resize=True):
+    def txt_layer(cls, text, im_size, t_pos, resize):
         """Create a text layer to be merged with main image.
 
         text: string with quote, author, other
         im_size: pillow size tuple (width, height) for original
         t_pos: pillow coordinate tuple (horiz, vert) for text location
+        resize: expand to fit well horizontally
 
         make blank images for the text and author, same size as im,
         initialized to transparent text color
@@ -70,9 +72,10 @@ class ImageTexter():
 
         dt = ImageDraw.Draw(text_layer)
 
-        # I don't resize the author
+        # Only the quote will come in this way
         if resize:
             font_size = cls.resize_font(text, im_size, font_size)
+            # print(cls.quote_size)
 
         the_font = ImageFont.truetype(font=cls.font_path, size=font_size)
 
@@ -97,7 +100,9 @@ class ImageTexter():
         plus a margin, update font size and rerun
         """
         test_font = ImageFont.truetype(font=cls.font_path, size=font_size)
-        # print(f'font size: {font_size}')
+        # print(f'font size {font_size}')
+        cls.quote_size = [test_font.getsize(text)]
+        # print(cls.quote_size)
         if test_font.getlength(text) + 50 > im_size[0]:
             font_size -= 1
             # print(f'too big: font size {font_size} length {test_font.getlength(text)} im_size {im_size}')

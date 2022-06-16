@@ -1,48 +1,49 @@
-import os
+import argparse
 import random
+import os
+from QuoteEngine.importer import Importer
+from QuoteEngine.quotemodel import QuoteModel
+from MemeEngine.memeengine import MemeEngine
 
-# @TODO Import your Ingestor and MemeEngine classes
 
+def quote_args(args):
+    if not args.q or not args.a:
 
-def generate_meme(path=None, body=None, author=None):
-    """ Generate a meme given an path and a quote """
-    img = None
-    quote = None
-
-    if path is None:
-        images = "./_data/photos/dog/"
-        imgs = []
-        for root, dirs, files in os.walk(images):
-            imgs = [os.path.join(root, name) for name in files]
-
-        img = random.choice(imgs)
+        imp = Importer()
+        quote_list = imp.parse_all()
+        return random.choice(quote_list)
     else:
-        img = path[0]
+        if len(args.q) < 1 or len(args.a) < 1:
+            print('Quote and author must be at least 1 character.')
+            quit()
+        elif len(args.q) > 40 or len(args.a) > 25:
+            print('Quote should be under 40 characters, author less than 25.')
+            quit()
+        return QuoteModel(args.q, args.a)
 
-    if body is None:
-        quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                       './_data/DogQuotes/DogQuotesDOCX.docx',
-                       './_data/DogQuotes/DogQuotesPDF.pdf',
-                       './_data/DogQuotes/DogQuotesCSV.csv']
-        quotes = []
-        for f in quote_files:
-            quotes.extend(Ingestor.parse(f))
-
-        quote = random.choice(quotes)
+def make_img(quote, args):
+    me = MemeEngine('./images')
+    if args.f:
+        if os.path.exists(args.f):
+            return me.make_meme(args.f, quote._body, quote._author)
+        else:
+            print(f'file {args.f} not found.')
+            quit()
     else:
-        if author is None:
-            raise Exception('Author Required if Body is Used')
-        quote = QuoteModel(body, author)
-
-    meme = MemeEngine('./tmp')
-    path = meme.make_meme(img, quote.body, quote.author)
-    return path
-
+        return me.make_meme('./_data/photos/dog/', quote._body, quote._author)
 
 if __name__ == "__main__":
-    # @TODO Use ArgumentParser to parse the following CLI arguments
-    # path - path to an image file
-    # body - quote body to add to the image
-    # author - quote author to add to the image
-    args = None
-    print(generate_meme(args.path, args.body, args.author))
+    parser = argparse.ArgumentParser(description='Create a meme-ish image.',
+                                     argument_default=None)
+    parser.add_argument('-q', type=str,
+                        help='text body of the quote.', required=False)
+    parser.add_argument('-a', type=str,
+                        help='the quote author.', required=False)
+    parser.add_argument('-f', type=str,
+                        help='path to a custom image file.', required=False)
+
+    args = parser.parse_args()
+    quote = quote_args(args)
+    file_name = make_img(quote, args)
+
+    print(f'Meme-like image generated: {file_name}')
