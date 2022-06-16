@@ -10,7 +10,7 @@ from QuoteEngine.quotemodel import QuoteModel
 from MemeEngine.memeengine import MemeEngine
 
 app = Flask(__name__)
-meme = MemeEngine('./images')
+meme = MemeEngine('./static')
 images_path = "./_data/photos/dog/"
 
 
@@ -33,6 +33,7 @@ def meme_rand():
     quote = random.choice(quotes)
 
     path = meme.make_meme(img, quote.body, quote.author)
+    print(path)
     return render_template('meme.html', path=path)
 
 
