@@ -25,9 +25,9 @@ class Importer(IngestorInterface):
 
     def parse_all(self):
         self._all_quotes = []
-        print('running')
+        # print('running')
         for dir in self._quote_dirs:
-            print(dir)
+            # print(dir)
             try:
                 file_names = os.listdir(dir)
             except BaseException as err:

@@ -14,6 +14,8 @@ class MemeEngine():
 
     def make_meme(self, img_file, text, author, width=500):
         if os.path.isdir(img_file):
+            if img_file[::-1] != '/':
+                img_file += '/'
             img_file = self.choose_image(img_file)
         output_file = self.set_outfile(self._output_dir)
 
@@ -28,6 +30,8 @@ class MemeEngine():
         return output_file
 
     def choose_image(self, img_path):
+        if img_path[::-1] != '/':
+            img_path += '/'
         try:
             file_arr = os.listdir(img_path)
         except BaseException as err:

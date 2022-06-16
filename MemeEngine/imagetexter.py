@@ -30,10 +30,10 @@ class ImageTexter():
 
         text_x = random.randrange(50, int(im.size[0] / 2))
         text_y = random.randrange(50, int(im.size[1] - 150))
-        print(f'Random location: {text_x}, {text_y}')
+        # print(f'Random location: {text_x}, {text_y}')
 
         quote_pos = (text_x, text_y)
-        auth_pos = (text_x + 50, text_y + 50)
+        auth_pos = (text_x + 50, text_y + 75)
 
         quote_layer = cls.txt_layer(text, im.size, quote_pos)
         auth_layer = cls.txt_layer(author, im.size, auth_pos, False)

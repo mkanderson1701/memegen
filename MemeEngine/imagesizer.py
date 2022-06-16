@@ -4,6 +4,7 @@ Or applying other spatial transformations.
 
 from PIL import Image
 from PIL import ImageOps
+import os
 
 
 class ImageSizer():
@@ -15,6 +16,7 @@ class ImageSizer():
 
         Return a pillow image object.
         """
+        # print(f'passed dir is {os.path.abspath(img_path)}')
         try:
             im = Image.open(img_path)
         except FileNotFoundError as err:
