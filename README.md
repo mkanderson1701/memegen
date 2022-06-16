@@ -9,6 +9,13 @@ Generates a "meme-like" image from either a set of random included dog pics, and
 **meme.py** : Command-line version. With no arguments, generates image files from built-in data. Optional arguments --quote --author and --path
 can be used to specify custom quote, author, and image file path.
 
+<h3>Usage</h3>
+
+Assumes python is installed. Copy repository to local directory. Verify packages in requirements.txt are available.
+
+Run **python3 app.py** to start the web server.
+
+Run **python3 meme.py** to generate a random meme, or with the -h option to see command line options.
 
 
 <h3>Modules:</h3>
