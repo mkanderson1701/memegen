@@ -19,13 +19,13 @@ can be used to specify custom quote, author, and image file path.
 
 **csvingestor, docxingestor, pdfingestor, textingestor:** Parse files of respective types in to quote objects.
 
-**importer:** interface filesystem to quoteengines, walk directories and load, etc..
+**importer:** Interface filesystem to quoteengines, walk directories and load, etc..
 
 
 <h4>Meme engine</h4>
 
-**imagesizer:** resizing of image as needed
+**imagesizer:** Resizing of image as needed
 
-**imagetexter:** handles addition of text to the image
+**imagetexter:** Handles addition of text to the image
 
-**memeengine:** assembly of quote and image in to new, final image
+**memeengine:** Assembly of quote and image in to new, final image
