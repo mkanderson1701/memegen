@@ -9,6 +9,8 @@ Generates a "meme-like" image from either a set of random included dog pics, and
 **meme.py** : Command-line version. With no arguments, generates image files from built-in data. Optional arguments --quote --author and --path
 can be used to specify custom quote, author, and image file path.
 
+
+
 <h3>Modules:</h3>
 
 <h4>Quote processing</h4>
