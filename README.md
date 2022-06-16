@@ -24,11 +24,15 @@ Run **python3 meme.py** to generate a random meme, or with the -h option to see 
 
 **quotemodel:** Object containing one quote
 
-**quoteengine:** Base class for all importer modules. Implements can_ingest(file) which will distribute a file to appropriate child class for loading.
+**quoteengine:** Abstract base class for all importer modules. Also implements class method can_ingest(file) which will distribute a file to appropriate child class for loading. Depends on ingestors below.
 
-**csvingestor, docxingestor, pdfingestor, textingestor:** Parse files of respective types in to quote objects.
+**csvingestor, docxingestor, pdfingestor, textingestor:** Parse files of respective types in to quote objects. Depends on above.
 
-**importer:** Interface filesystem to quoteengines, walk directories and load, etc..
+**importer:** Interface filesystem to quoteengines, walk directories and load, etc.. Depends on above.
+
+<h4>Usage</h4>
+
+If you are using these classes, it's probably to load quotes from various CSV files in known folders. Instantiate a new importer object with Importer(). Then call its parse_all() method, which will return a list of quote objects. You can then randomly choose a quote, or do whatever with them. You can also call parse_file(filepath: str) directly to load a single file and return a list of quotes.
 
 
 <h4>Meme engine</h4>
@@ -37,4 +41,8 @@ Run **python3 meme.py** to generate a random meme, or with the -h option to see 
 
 **imagetexter:** Handles addition of text to the image
 
-**memeengine:** Assembly of quote and image in to new, final image
+**memeengine:** Assembly of quote and image in to new, final image. Depends on two previous.
+
+<h4>Usage</h4>
+
+Instantiate a new engine with MemeEngine(outpath: str). All finished images will appear in the specified outpath folder. You can then call make_meme(img: str, body: str, author: str) which completely creates the meme image, and returns the path to the finished image.
