@@ -18,12 +18,21 @@ class Importer(IngestorInterface):
     Takes a file path and checks the importers can_ingest method
     for an importer module capable of proessing it.
     """
+
     def __init__(self):
+        """Initialize a new importer."""
         self._quote_dirs = ['./_data/DogQuotes/', './_data/SimpleLines']
-        self._importers = [DocxIngestor, CsvIngestor, PdfIngestor, TextIngestor]
+        self._importers = [DocxIngestor,
+                           CsvIngestor,
+                           PdfIngestor,
+                           TextIngestor]
         self._file_list = []
 
     def parse_all(self):
+        """Iterate through all directories provided.
+
+        Calls parse_file on each file and adds objects to a list of quotes.
+        """
         self._all_quotes = []
         # print('running')
         for dir in self._quote_dirs:

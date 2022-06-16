@@ -1,4 +1,5 @@
 """ImageText class responsible for adding meme text to the image.
+
 Or other layered effects.
 """
 
@@ -20,8 +21,6 @@ class ImageTexter():
 
         Return a pillow image object.
         """
-
-        # add text flourishes
         author = '- ' + author
         text = '"' + text + '"'
 
@@ -105,11 +104,9 @@ class ImageTexter():
         # print(cls.quote_size)
         if test_font.getlength(text) + 50 > im_size[0]:
             font_size -= 1
-            # print(f'too big: font size {font_size} length {test_font.getlength(text)} im_size {im_size}')
-            font_size = cls.resize_font(text, im_size, font_size)            
+            font_size = cls.resize_font(text, im_size, font_size)
         elif test_font.getlength(text) < im_size[0] - 100:
             font_size += 1
-            # print(f'too small: font size {font_size} length {test_font.getlength(text)} im_size {im_size}')
             font_size = cls.resize_font(text, im_size, font_size)
         return font_size
 
@@ -127,5 +124,5 @@ if __name__ == '__main__':
     im = Image.open('./_data/photos/dog/luna1.jpg')
     if im.size[0] > 500:
         im = im.resize((500, int(im.size[1] * 500 / im.size[0])))
-    im = ImageTexter.text_img(im, 'What do you want human? I have many things to do today.', 'Luna the Destroyer')
+    im = ImageTexter.text_img(im, 'What do you want human?', 'Luna Destroyer')
     im.save('./images/testimg.jpg')

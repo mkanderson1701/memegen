@@ -131,3 +131,5 @@ tests/test_query_wtf.py
 testfile.json
 testfile.csv
 images/*.*
+static/*.*
+tmp/*.*

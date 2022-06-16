@@ -1,4 +1,4 @@
-"""Builds meme."""
+"""Main meme-building module."""
 
 from .imagetexter import ImageTexter
 from .imagesizer import ImageSizer
@@ -8,11 +8,24 @@ import datetime
 
 
 class MemeEngine():
+    """Assembles quote and image to produce a a meme file."""
 
     def __init__(self, output_dir):
+        """Instantiate and set the output directory for any memes created."""
         self._output_dir = output_dir
 
     def make_meme(self, img_file, text, author, width=500):
+        """Call to construct meme.
+
+        Image will be resized as needed.
+
+        img_file: (str) path to original
+        text: (str) body of quote
+        author: (str) author of quote
+        width: (int, default 500)
+
+        returns path to final meme image.
+        """
         if os.path.isdir(img_file):
             if img_file[::-1] != '/':
                 img_file += '/'
@@ -30,6 +43,7 @@ class MemeEngine():
         return output_file
 
     def choose_image(self, img_path):
+        """Pick a random image from the path provided."""
         if img_path[::-1] != '/':
             img_path += '/'
         try:
@@ -40,6 +54,7 @@ class MemeEngine():
         return img_path + random.choice(file_arr)
 
     def set_outfile(self, output_dir):
+        """Return a unique-ish filename in the output dir."""
         if output_dir[::-1] != '/':
             output_dir += '/'
         path_pref = 'img'

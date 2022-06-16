@@ -26,7 +26,7 @@ class TextIngestor(IngestorInterface):
 
         quotes = []
 
-        with open(file_path) as file:    
+        with open(file_path) as file:
             for line in file:
                 # print(line)
                 quote_data = line.strip('\n').split(' - ')

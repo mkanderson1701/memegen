@@ -1,4 +1,5 @@
 """ImageSizer class responsible for resizing an image.
+
 Or applying other spatial transformations.
 """
 

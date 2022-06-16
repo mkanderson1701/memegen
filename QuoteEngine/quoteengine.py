@@ -27,8 +27,8 @@ class IngestorInterface(ABC):
 
     def __repr__():
         """Machine-friendly representation."""
-        return f'IngestorInterface(ABC) : abstract base class for quote file ingestors.'
+        return f'IngestorInterface(ABC) : abstract class for file ingestors.'
 
     def __str__():
         """User-friendly representation."""
-        return f'IngestorInterface(ABC) : abstract base class for quote file ingestors.'
+        return f'IngestorInterface(ABC) : abstract class for file ingestors.'
