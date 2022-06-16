@@ -5,7 +5,7 @@ with a defined list of allowed_extensions.
 """
 
 from abc import ABC, abstractmethod
-from quotemodel import QuoteModel
+from QuoteEngine.quotemodel import QuoteModel
 
 
 class IngestorInterface(ABC):

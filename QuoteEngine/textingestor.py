@@ -28,8 +28,10 @@ class TextIngestor(IngestorInterface):
 
         with open(file_path) as file:    
             for line in file:
+                # print(line)
                 quote_data = line.strip('\n').split(' - ')
-                quotes.append(QuoteModel(quote_data[0], quote_data[1]))
+                if len(quote_data) == 2:
+                    quotes.append(QuoteModel(quote_data[0], quote_data[1]))
         # print(quotes)
         return quotes
 

@@ -3,8 +3,8 @@
 It mainly consists of one method, for parsing the supported file type.
 """
 
-from quoteengine import IngestorInterface
-from quotemodel import QuoteModel
+from .quoteengine import IngestorInterface
+from .quotemodel import QuoteModel
 import pandas
 
 
@@ -26,8 +26,10 @@ class CsvIngestor(IngestorInterface):
             raise Exception('cannot ingest exception')
 
         quotes = []
-
-        df = pandas.read_csv(file_path, header=0)      
+        try:
+            df = pandas.read_csv(file_path, header=0)
+        except BaseException as err:
+            print(f'Unexpected {err=}, {type(err)=} reading csv {file_path}')
         for index, quote_data in df.iterrows():
             quotes.append(QuoteModel(quote_data['body'], quote_data['author']))
         # print(quotes)

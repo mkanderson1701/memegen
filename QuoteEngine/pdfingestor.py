@@ -26,9 +26,11 @@ class PdfIngestor(IngestorInterface):
             raise Exception('cannot ingest exception')
 
         quotes = []
-
-        p = subprocess.Popen(['pdftotext.exe', '-simple', file_path, '-'],
-                             stdout=subprocess.PIPE, text=True)
+        try:
+            p = subprocess.Popen(['pdftotext.exe', '-simple', file_path, '-'],
+                                 stdout=subprocess.PIPE, text=True)
+        except BaseException as err:
+            print(f'Unexpected {err=}, {type(err)=} reading pdf {file_path}')
         output, err = p.communicate()
         p_status = p.wait()
         txt_list = output.split('\n')
@@ -37,6 +39,7 @@ class PdfIngestor(IngestorInterface):
             quote_data = quote.split(' - ')
             if len(quote_data) == 2:
                 quote_data[0] = quote_data[0].strip('"')
+                # print(QuoteModel(quote_data[0], quote_data[1]))
                 quotes.append(QuoteModel(quote_data[0], quote_data[1]))
 
         # print(quotes)
@@ -55,4 +58,4 @@ class PdfIngestor(IngestorInterface):
 
 if __name__ == '__main__':
     """Used during module testing."""
-    PdfIngestor.parse_file('./_data/DogQuotes/DogQuotesPDF.pdf')
+    PdfIngestor.parse_file('./_data/SimpleLines/SimpleLinesNew.pdf')

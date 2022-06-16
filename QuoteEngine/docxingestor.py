@@ -26,8 +26,10 @@ class DocxIngestor(IngestorInterface):
             raise Exception('cannot ingest exception')
 
         quotes = []
-
-        docx_obj = docx.Document(file_path)
+        try:
+            docx_obj = docx.Document(file_path)
+        except BaseException as err:
+            print(f'Unexpected {err=}, {type(err)=} reading docx {file_path}')
         for paragraph in docx_obj.paragraphs:
             if paragraph.text != "":
                 quote_data = paragraph.text.split(' - ')

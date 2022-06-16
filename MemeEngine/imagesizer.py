@@ -3,11 +3,13 @@ Or applying other spatial transformations.
 """
 
 from PIL import Image
+from PIL import ImageOps
 
 
 class ImageSizer():
     """This class handles all image spatial translations."""
 
+    @classmethod
     def resize_img(cls, img_path, width):
         """Resize an image to maximum (width) while maintaining aspect ratio.
 
@@ -15,9 +17,15 @@ class ImageSizer():
         """
         try:
             im = Image.open(img_path)
-        except FileNotFoundError:
-            raise Exception(f'Image file not found: {img_path}')
+        except FileNotFoundError as err:
+            print(f'Unexpected {err=}, {type(err)=} opening {img_path}')
+            raise
+        except BaseException as err:
+            print(f'Unexpected {err=}, {type(err)=} opening {img_path}')
+            raise
 
+        # Some images are only rotated due to EXIF data, honor that
+        im = ImageOps.exif_transpose(im)
         if im.size[0] > width:
             im = im.resize((width, int(im.size[1] * width / im.size[0])))
         return im
