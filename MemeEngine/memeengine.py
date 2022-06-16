@@ -1,7 +1,7 @@
 """Builds meme."""
 
-from imagetexter import ImageTexter
-from imagesizer import ImageSizer
+from .imagetexter import ImageTexter
+from .imagesizer import ImageSizer
 import os
 import random
 import datetime
@@ -12,8 +12,9 @@ class MemeEngine():
     def __init__(self, output_dir):
         self._output_dir = output_dir
 
-    def make_meme(self, imgs_dir, text, author, width=500):
-        img_file = self.choose_image(imgs_dir)
+    def make_meme(self, img_file, text, author, width=500):
+        if os.path.isdir(img_file):
+            img_file = self.choose_image(img_file)
         output_file = self.set_outfile(self._output_dir)
 
         im = ImageSizer.resize_img(img_file, width)

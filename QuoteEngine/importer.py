@@ -25,7 +25,9 @@ class Importer(IngestorInterface):
 
     def parse_all(self):
         self._all_quotes = []
+        print('running')
         for dir in self._quote_dirs:
+            print(dir)
             try:
                 file_names = os.listdir(dir)
             except BaseException as err:
@@ -39,6 +41,7 @@ class Importer(IngestorInterface):
                 except BaseException as err:
                     print(f'Unexpected {err=}, {type(err)=} listing {dir}')
                     raise
+        return self._all_quotes
 
     def parse_file(self, file_path):
         """Run can_ingest for each module against the filename to find a match.
@@ -66,4 +69,3 @@ if __name__ == '__main__':
     imp = Importer()
     imp.parse_all()
     # print(imp._all_quotes)
-

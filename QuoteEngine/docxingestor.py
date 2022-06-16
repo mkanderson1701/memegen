@@ -3,8 +3,8 @@
 It mainly consists of one method, for parsing the supported file type.
 """
 
-from quoteengine import IngestorInterface
-from quotemodel import QuoteModel
+from .quoteengine import IngestorInterface
+from .quotemodel import QuoteModel
 import docx
 
 
