@@ -9,10 +9,13 @@ class QuoteModel():
         self.body = body
         self.author = author
 
+    def print(self):
+        return f'"{self.body}" - {self.author}'
+
     def __repr__(self):
         """Machine-friendly representation."""
-        return f'QuoteModel("{self._body}", "{self._author}")'
+        return f'QuoteModel("{self.body}", "{self.author}")'
 
     def __str__(self):
         """User-friendly representation."""
-        return f'"{self._body}" - {self._author}'
+        return f'"{self.body}" - {self.author}'
