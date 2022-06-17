@@ -130,6 +130,6 @@ tests/test_query_wtf.py
 #project-specific crap
 testfile.json
 testfile.csv
-images/*.*
-static/*.*
-tmp/*.*
+images/**
+static/*.jpg
+tmp/**

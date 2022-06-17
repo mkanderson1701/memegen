@@ -16,6 +16,9 @@ images_path = "./_data/photos/dog/"
 
 def setup():
     """Load all resources."""
+    if not os.path.isdir('./static'):
+        os.makedirs('/static')
+
     imp = Importer()
     quotes = imp.parse_all()
 
